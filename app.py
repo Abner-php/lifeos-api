@@ -21,7 +21,7 @@ class TarefaCriar(BaseModel):
 
 class Tarefas (BaseModel):
     id: str
-    titulo: str
+    titulo: stR
     descricao: str
     criado_em: str
     concluida: bool
