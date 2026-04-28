@@ -87,5 +87,8 @@ def Listar_tarefas():
     dados = carregar_daddos()
     return dados["tarefas"]
 
-@app.get("")
-        
+@app.get("/tarefas/{tarefa_ud}", response_model=Tarefa)
+def buscar_tarefa(tarefa_id: str):
+    tarefa, _ = buscar_tarefa_por_id(tarefa_id)
+
+    if not tarefa:        
