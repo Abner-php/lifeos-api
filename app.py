@@ -83,12 +83,55 @@ def criar_tarefa(tarefa: TarefaCriar):
     return nova_tarefa
 
 @app.get("/tarefas", response_model=List[Tarefa])
-def Listar_tarefas():
-    dados = carregar_daddos()
+def listar_tarefas():
+    dados = carregar_dados()
     return dados["tarefas"]
 
-@app.get("/tarefas/{tarefa_ud}", response_model=Tarefa)
+@app.get("/tarefas/{tarefa_id}", response_model=Tarefa)
 def buscar_tarefa(tarefa_id: str):
     tarefa, _ = buscar_tarefa_por_id(tarefa_id)
 
-    if not tarefa:        
+    if not tarefa:
+        raise HTTPException(status_code=404, detail="Tarefa não encontrada")
+
+        return tarefa
+
+@app.put("/tarefas/{tarefa_id}", response_model=Tareda)
+def atualizar_tarefa(tarefa_id: str, tarefa_atualizada: TarefaAtualizar):
+    tarefa, dados = buscar_tarefa_por_id(tarefa_id)
+
+    if not tarefa:
+        raise HTTPException(status_code=404, detail="Tarefa não encontrada")
+
+        tarefa["titulo"] = tarefa_atualizada.titulo
+        tarefa["descricao"] = tarefa_atualizada.descricao
+        tarefa["concluida"] = tarefa_atualizada.concluida
+
+        salvar_dados(dados)
+        return tarefa
+
+@app.delete("/tarefas/{tarefa_id}/concluir", response_model=Tarefa)
+def concluir_tarefa(tarefa_id: str):
+    tarefa, dados = buscar_tarefa_por_id(tarefa_id)
+
+    if not tarefa:
+        raise HTTPException(status_code=404, detail="Tarefa não encontrada")
+
+    tarefa["concluida"] = True
+    salvar_dados(dados)
+
+    return tarefa
+
+@app.delete("/tarefas/{tarefa_id}")
+def deletar_tarefa(tarefa_id: str):
+    dados = carregar_dados()
+
+    for i, tarefa in enumerate(dados["tarefas"]):
+        if tarefa["id"] == tarefa_id:
+            dados["tarefas"].pop(i)
+            salvar_dados(dados)
+            return {"mensagem": "Tarefa deletada com sucesso"}
+            
+        raise HTTPException(status_code=404, detail="Tarefa não encontrada")
+
+
