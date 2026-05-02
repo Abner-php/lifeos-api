@@ -1,0 +1,18 @@
+{
+    "tarefas": [
+        {
+            "id": "97357dac-a12b-4cef-a24c-69d84fa5b662",
+            "titulo": "Estudar Python",
+            "descricao": "Revistar FastAPI e APIs",
+            "criado_em": "02/05/2026 17:10:25",
+            "concluida": false
+        },
+        {
+            "id": "784f1bd1-f0dc-4b15-aeae-1b718bdbf066",
+            "titulo": "Estudar Python",
+            "descricao": "Revistar FastAPI e APIs",
+            "criado_em": "02/05/2026 17:10:31",
+            "concluida": false
+        }
+    ]
+}
